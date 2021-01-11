@@ -80,6 +80,45 @@ class RestaurantTest {
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>ORDER<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    @Test
+    public void total_order_value_calculated_should_be_same_as_sum_of_price_of_all_menu_items_ordered(){
+        //Arrange
+        addRestaurant();
+        List<String> orderItems = new ArrayList<String>();
+        Integer orderValue = 0;
+
+        orderItems.add(restaurant.getMenu().get(0).getName());
+        orderValue = restaurant.getMenu().get(0).getPrice();
+
+        orderItems.add(restaurant.getMenu().get(1).getName());
+        orderValue += restaurant.getMenu().get(1).getPrice();
+
+        //Act
+        Integer orderValueCalculated = restaurant.calculateTotalOrderValue(orderItems);
+
+        //Assert
+        assertEquals(orderValue, orderValueCalculated);
+    }
+
+    @Test
+    public void total_order_value_calculated_should_be_0_when_an_empty_list_menu_items_ordered(){
+        //Arrange
+        addRestaurant();
+        List<String> orderItems = new ArrayList<String>();
+        Integer orderValue = 0;
+
+        //Act
+        Integer orderValueCalculated = restaurant.calculateTotalOrderValue(orderItems);
+
+        //Assert
+        assertEquals(orderValue, orderValueCalculated);
+    }
+
+    //>>>>>>>>>>>>>>>>>>>>>>>>>>>ORDER<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
     private void addRestaurant() {
         LocalTime openingTime = LocalTime.parse("10:30:00");
         LocalTime closingTime = LocalTime.parse("22:00:00");
